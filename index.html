@@ -1,338 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LLIONTRI — Shop Local</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLIONTRI</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#dff3ff;color:#43291f}
+header{padding:20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:26px;font-weight:800;letter-spacing:4px}
+.cart{background:#43291f;color:#fff;padding:10px 16px;border:none;border-radius:999px}
+.hero{text-align:center;padding:50px 20px}
+.hero h1{font-size:42px}
+.hero p{margin-top:10px;opacity:.7}
+.section{padding:20px}
+.products{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+.product{background:#fffaf4;border-radius:20px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.08)}
+.img{height:150px;background:#bfe5fa;display:flex;align-items:center;justify-content:center;font-size:40px}
+.info{padding:15px}
+.price{font-weight:bold;margin:10px 0}
+button{cursor:pointer}
+.add{width:100%;padding:12px;border:none;background:#43291f;color:white;border-radius:12px}
+.error{background:#ffe5e5;color:#8b0000;padding:15px;border-radius:12px}
+</style>
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #dff3ff;
-      color: #43291f;
-    }
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    header {
-      padding: 22px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 25px;
-      font-weight: 800;
-      letter-spacing: 4px;
-    }
-
-    .cart {
-      background: #43291f;
-      color: white;
-      border: none;
-      padding: 12px 16px;
-      border-radius: 30px;
-      font-weight: bold;
-    }
-
-    .hero {
-      padding: 55px 20px 35px;
-      text-align: center;
-    }
-
-    .hero h1 {
-      font-size: 48px;
-      line-height: 1;
-      margin-bottom: 18px;
-      letter-spacing: -2px;
-    }
-
-    .hero p {
-      font-size: 17px;
-      opacity: .75;
-      max-width: 400px;
-      margin: auto;
-    }
-
-    .search {
-      margin: 25px 20px;
-    }
-
-    .search input {
-      width: 100%;
-      padding: 17px;
-      border: none;
-      border-radius: 18px;
-      font-size: 16px;
-      outline: none;
-    }
-
-    .section {
-      padding: 20px;
-    }
-
-    .section h2 {
-      margin-bottom: 18px;
-      font-size: 24px;
-    }
-
-    .stores {
-      display: grid;
-      gap: 15px;
-    }
-
-    .store {
-      background: #fffaf4;
-      padding: 22px;
-      border-radius: 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 8px 25px rgba(67,41,31,.08);
-    }
-
-    .store h3 {
-      margin-bottom: 6px;
-    }
-
-    .store span {
-      font-size: 13px;
-      opacity: .6;
-    }
-
-    .visit {
-      background: #43291f;
-      color: white;
-      padding: 11px 15px;
-      border-radius: 20px;
-      text-decoration: none;
-      font-size: 13px;
-    }
-
-    .products {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-    }
-
-    .product {
-      background: #fffaf4;
-      border-radius: 22px;
-      overflow: hidden;
-    }
-
-    .product-img {
-      height: 170px;
-      background: #bfe5fa;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 42px;
-    }
-
-    .product-info {
-      padding: 15px;
-    }
-
-    .product-info h3 {
-      font-size: 15px;
-      margin-bottom: 7px;
-    }
-
-    .price {
-      font-weight: bold;
-      margin-bottom: 12px;
-    }
-
-    .add {
-      width: 100%;
-      border: none;
-      background: #43291f;
-      color: white;
-      padding: 11px;
-      border-radius: 15px;
-      font-weight: bold;
-    }
-
-    footer {
-      padding: 50px 20px;
-      text-align: center;
-      opacity: .65;
-      font-size: 13px;
-    }
-  </style>
 </head>
-
 <body>
 
 <header>
-  <div class="logo">LLIONTRI</div>
-  <button class="cart" onclick="showCart()">Cart <span id="count">0</span></button>
+<div class="logo">LLIONTRI</div>
+<button class="cart" onclick="checkout()">Cart <span id="count">0</span></button>
 </header>
 
 <section class="hero">
-  <h1>Your local<br>marketplace.</h1>
-  <p>
-    Discover businesses around you. Shop their products.
-    Order directly through WhatsApp.
-  </p>
-</section>
-
-<div class="search">
-  <input
-    type="text"
-    placeholder="Search products or businesses..."
-    onkeyup="searchStore(this.value)"
-  >
-</div>
-
-<section class="section">
-  <h2>Businesses</h2>
-
-  <div class="stores">
-
-    <div class="store">
-      <div>
-        <h3>Amahle Fashion</h3>
-        <span>Clothing • Kempton Park</span>
-      </div>
-      <a class="visit" href="#">Shop</a>
-    </div>
-
-    <div class="store">
-      <div>
-        <h3>Fresh Kicks</h3>
-        <span>Sneakers • Johannesburg</span>
-      </div>
-      <a class="visit" href="#">Shop</a>
-    </div>
-
-    <div class="store">
-      <div>
-        <h3>Nomsa Bakery</h3>
-        <span>Bakery • Kempton Park</span>
-      </div>
-      <a class="visit" href="#">Shop</a>
-    </div>
-
-  </div>
+<h1>Your Local Marketplace.</h1>
+<p>Shop businesses through WhatsApp.</p>
 </section>
 
 <section class="section">
+<h2>Featured</h2>
 
-  <h2>Featured</h2>
 <div class="products" id="products">
-  <p>Loading products...</p>
+Loading products...
 </div>
 </section>
-
-<footer>
-  © 2026 LLIONTRI — Shop local. Sell smarter.
-</footer>
 
 <script>
+const SUPABASE_URL="https://ataruosnvbwhvdctshxv.supabase.co";
+const SUPABASE_KEY="sb_publishable_vzE6bS-KlTgvne2ZVAg7kQ_RaR7KgbT";
 
-let cart = [];
-const SUPABASE_URL = "https://ataruosnvbwhvdctshxv.supabase.co"; 
-const SUPABASE_KEY = "sb_publishable_vzE6bS-KlTgvne2ZVAg7kQ_RaR7KgbT";
-  async function loadProducts() {
-  const response = await fetch(
-    `${SUPABASE_URL}/rest/v1/products?select=*`
-  );
+const supabase=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
-  const products = await response.json();
+let cart=[];
 
-  const container = document.getElementById("products");
+async function loadProducts(){
 
-  container.innerHTML = "";
+const box=document.getElementById("products");
 
-  products.forEach(product => {
-    container.innerHTML += `
-      <div class="product">
-        <div class="product-img">🛍️</div>
+const {data,error}=await supabase
+.from("products")
+.select("*");
 
-        <div class="product-info">
-          <h3>${product.name}</h3>
-          <div class="price">R${product.price}</div>
+if(error){
+box.innerHTML='<div class="error">Connection failed.</div>';
+console.log(error);
+return;
+}
 
-          <button class="add"
-            onclick="addToCart('${product.name}', ${product.price})">
-            Add to cart
-          </button>
-        </div>
-      </div>
-    `;
-  });
+if(!data.length){
+box.innerHTML='<div class="error">No products found.</div>';
+return;
+}
+
+box.innerHTML="";
+
+data.forEach(product=>{
+
+box.innerHTML+=`
+<div class="product">
+<div class="img">🛍️</div>
+<div class="info">
+<h3>${product.name}</h3>
+<div class="price">R${product.price}</div>
+<button class="add" onclick="addToCart('${product.name}',${product.price})">Add to cart</button>
+</div>
+</div>
+`;
+
+});
+
+}
+
+function addToCart(name,price){
+cart.push({name,price});
+document.getElementById("count").innerText=cart.length;
+}
+
+function checkout(){
+
+if(!cart.length){
+alert("Cart is empty");
+return;
+}
+
+let text="LLIONTRI Order%0A%0A";
+let total=0;
+
+cart.forEach(item=>{
+text+=`• ${item.name} - R${item.price}%0A`;
+total+=item.price;
+});
+
+text+=`%0ATotal: R${total}`;
+
+window.open(`https://wa.me/?text=${text}`,"_blank");
+
 }
 
 loadProducts();
-function addToCart(name, price) {
-
-  cart.push({
-    name: name,
-    price: price
-  });
-
-  document.getElementById("count").innerText = cart.length;
-
-  alert(name + " added to your cart.");
-}
-
-function showCart() {
-
-  if (cart.length === 0) {
-    alert("Your cart is empty.");
-    return;
-  }
-
-  let message = "Hello LLIONTRI, I'd like to order:%0A%0A";
-  let total = 0;
-
-  cart.forEach(function(item) {
-
-    message += "• " + item.name + " — R" + item.price + "%0A";
-
-    total += item.price;
-
-  });
-
-  message += "%0ATotal: R" + total;
-
-  /*
-    REPLACE THIS NUMBER WITH YOUR
-    LLIONTRI WHATSAPP NUMBER.
-  */
-
-  let phone = "27689664839";
-
-  window.open(
-    "https://wa.me/" + phone + "?text=" + message,
-    "_blank"
-  );
-}
-
-function searchStore(value) {
-
-  value = value.toLowerCase();
-
-  let stores = document.querySelectorAll(".store");
-
-  stores.forEach(function(store) {
-
-    store.style.display =
-      store.innerText.toLowerCase().includes(value)
-      ? "flex"
-      : "none";
-
-  });
-
-}
-
 </script>
 
 </body>
