@@ -226,37 +226,9 @@
 <section class="section">
 
   <h2>Featured</h2>
-
-  <div class="products">
-
-    <div class="product">
-      <div class="product-img">👕</div>
-
-      <div class="product-info">
-        <h3>Essential Hoodie</h3>
-        <div class="price">R350</div>
-
-        <button class="add" onclick="addToCart('Essential Hoodie',350)">
-          Add to cart
-        </button>
-      </div>
-    </div>
-
-    <div class="product">
-      <div class="product-img">👟</div>
-
-      <div class="product-info">
-        <h3>Classic Sneakers</h3>
-        <div class="price">R799</div>
-
-        <button class="add" onclick="addToCart('Classic Sneakers',799)">
-          Add to cart
-        </button>
-      </div>
-    </div>
-
-  </div>
-
+<div class="products" id="products">
+  <p>Loading products...</p>
+</div>
 </section>
 
 <footer>
@@ -268,6 +240,37 @@
 let cart = [];
 const SUPABASE_URL = "https://ataruosnvbwhvdctshxv.supabase.co"; 
 const SUPABASE_KEY = "sb_publishable_vzE6bS-KlTgvne2ZVAg7kQ_RaR7KgbT";
+  async function loadProducts() {
+  const response = await fetch(
+    `${SUPABASE_URL}/rest/v1/products?select=*`
+  );
+
+  const products = await response.json();
+
+  const container = document.getElementById("products");
+
+  container.innerHTML = "";
+
+  products.forEach(product => {
+    container.innerHTML += `
+      <div class="product">
+        <div class="product-img">🛍️</div>
+
+        <div class="product-info">
+          <h3>${product.name}</h3>
+          <div class="price">R${product.price}</div>
+
+          <button class="add"
+            onclick="addToCart('${product.name}', ${product.price})">
+            Add to cart
+          </button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+loadProducts();
 function addToCart(name, price) {
 
   cart.push({
