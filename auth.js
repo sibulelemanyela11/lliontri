@@ -1,6 +1,6 @@
 /* LLIONTRI Supabase authentication */
 const SUPABASE_URL = "https://ataruosnvbwhvdctshxv.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_vzE6bS-KlTgvne2ZVAg7k_QR";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_vzE6bS-KlTgvne2ZVAg7k_Q_RaR7KgbT";
 
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
   auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
