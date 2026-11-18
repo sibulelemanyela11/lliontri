@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>My account · LLIONTRI</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#dff3ff;color:#43291f;font-family:Arial,sans-serif;padding:22px}
+main{max-width:620px;margin:7vh auto;background:#fffaf4;border-radius:24px;padding:28px;box-shadow:0 12px 34px #43291f18}
+header{display:flex;justify-content:space-between;align-items:center}.logo{font-size:22px;font-weight:800;letter-spacing:4px}a{color:#75442e}
+h1{margin-top:38px}p{color:#735d52;line-height:1.5}button{padding:13px 18px;border:0;border-radius:12px;background:#43291f;color:white;font-weight:700;font-size:15px}
+#message{padding:12px;background:#ffe5e5;color:#8b0000;border-radius:10px;margin:15px 0}
+</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script defer src="auth.js"></script></head>
+<body><main>
+<header><div class="logo">LLIONTRI</div><a href="index.html">Back to store</a></header>
+<h1 id="account-name">Checking your account…</h1><p id="account-email"></p>
+<div id="message" role="status" hidden></div>
+<p>Your signed-in account area. Order history and profile management can be added here as the order database is connected.</p>
+<button id="signout" type="button">Sign out</button>
+</main></body></html>
