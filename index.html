@@ -26,13 +26,14 @@ button{cursor:pointer}
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script defer src="auth.js"></script>
 
 </head>
 <body>
 
 <header>
 <div class="logo">LLIONTRI</div>
-<button class="cart" onclick="checkout()">Cart <span id="count">0</span></button>
+<nav style="display:flex;gap:12px;align-items:center"><a id="auth-link" href="auth.html" style="color:#43291f;font-weight:bold;text-decoration:none">Sign in</a><button class="cart" onclick="checkout()">Cart <span id="count">0</span></button></nav>
 </header>
 
 <section class="hero">
