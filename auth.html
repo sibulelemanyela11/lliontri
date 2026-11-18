@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sign in · LLIONTRI</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#dff3ff;color:#43291f;font-family:Arial,sans-serif;display:grid;place-items:center;padding:20px}
+main{width:min(100%,430px);background:#fffaf4;border-radius:24px;padding:28px;box-shadow:0 12px 34px #43291f18}
+a{color:#75442e}header{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}.logo{font-size:22px;font-weight:800;letter-spacing:4px}
+h1{font-size:28px;margin:0 0 8px}p{color:#735d52;line-height:1.5}.field{margin:16px 0}label{display:block;font-weight:700;margin-bottom:7px}input{width:100%;padding:14px;border:1px solid #d8c9bd;border-radius:12px;font-size:16px;background:white}
+button{width:100%;padding:14px;border:0;border-radius:12px;background:#43291f;color:white;font-weight:700;font-size:16px;margin-top:10px;cursor:pointer}button:disabled{opacity:.6}
+#message{padding:12px;border-radius:10px;background:#ffe5e5;color:#8b0000;margin:16px 0}#message[data-type=success]{background:#e6f6e9;color:#205c2b}
+footer{text-align:center;margin-top:20px;font-size:14px}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script defer src="auth.js"></script>
+</head>
+<body><main id="auth-panel">
+<header><div class="logo">LLIONTRI</div><a href="index.html">Store</a></header>
+<h1>Welcome back</h1><p>Sign in or create an account to manage your LLIONTRI activity.</p>
+<div id="message" role="status" hidden></div>
+<form id="signin-form">
+<div class="field"><label for="signin-email">Email</label><input id="signin-email" name="email" type="email" autocomplete="email" required></div>
+<div class="field"><label for="signin-password">Password</label><input id="signin-password" name="password" type="password" autocomplete="current-password" required></div>
+<button type="submit">Sign in</button>
+</form>
+<form id="signup-form" hidden>
+<div class="field"><label for="full-name">Full name</label><input id="full-name" name="full_name" autocomplete="name" required></div>
+<div class="field"><label for="signup-email">Email</label><input id="signup-email" name="email" type="email" autocomplete="email" required></div>
+<div class="field"><label for="signup-password">Password</label><input id="signup-password" name="password" type="password" minlength="8" autocomplete="new-password" required></div>
+<button type="submit">Create account</button>
+</form>
+<footer><a href="#" id="switch-mode">Create an account</a></footer>
+</main></body></html>
